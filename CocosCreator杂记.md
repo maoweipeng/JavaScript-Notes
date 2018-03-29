@@ -97,3 +97,8 @@ let timestampToTime = function (timestamp) {
 cc.log(new Error().stack);
 console.trace("打印函数调用堆栈");
 ```
+9.获取当前的渲染模式
+```$xslt
+let type = cc._renderType;
+0 表示是 Canvas 模式，1 表示 WebGL 模式
+```
