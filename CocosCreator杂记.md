@@ -92,3 +92,8 @@ let timestampToTime = function (timestamp) {
             return Y + M + D + h + m + s;
         }
 ```
+8.打印 js 调用栈
+```$xslt
+cc.log(new Error().stack);
+console.trace("打印函数调用堆栈");
+```
