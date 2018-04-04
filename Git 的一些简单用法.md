@@ -60,6 +60,12 @@ git checkout .
 git fetch [remote]
 ```
 
+### **一些常见错误及解决方法**
 
+**问题**： 使用 git push 的时候报错 failed to push some refs to 'github.com....'
 
-
+**解决方法**：这是因为远程仓库有更新，要先更新再提交，以下命令：
+```
+git pull --rebase
+git push
+```
