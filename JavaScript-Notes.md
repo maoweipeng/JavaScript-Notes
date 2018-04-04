@@ -6,7 +6,7 @@
 
 经常用到克隆一个一模一样的数组，但是不能直接 arr1 = arr2，因为 arr1 只是指向同一份数据的另一个指针而已，这种情况下，修改arr2，arr1也会发生变化，而我们需要的是完全的克隆。
 
-ES5 中可以这样写： 
+ES5 中可以这样写：
 
 ```
 arr2 = arr1.concat()
@@ -15,7 +15,7 @@ arr2 = arr1.splice()
 ```
 根据 concat 和 splice 返回原数组的克隆的特性
 
-ES6 中出现了扩展运算符就可以更加简便地实现了： 
+ES6 中出现了扩展运算符就可以更加简便地实现了：
 ```
 arr2 = [...arr1]
 ```
@@ -81,14 +81,14 @@ console.log(module.exports.a)
 function extend(Child, Parent) {
 
   var F = function () {};
-  
+
   F.prototype = Parent.prototype;
-  
+
   Child.prototype = new F();
-  
+
   // 上面的操作使子对象的 constructor 指向了空对象，下面手动纠正回来
   Child.prototype.constructor = Child;
-  
+
   // 为子对象设置一个uber属性，这个属性直接指向父对象的prototype属性
   // 这等于在子对象上打开一条通道，可以直接调用父对象的方法。实现继承的完备性，纯属备用性质
   Child.uber = Parent.prototype;
@@ -127,3 +127,19 @@ eval(ba64);
 ```
 
 很巧妙，用一堆莫名其妙的无效字符串通过对每个字符进行转码操作再转回字符串就变成一串有效的恶意字符串， 最后用 eval() 执行恶意字符串，学习了。把这段恶意代码嵌套到别的网站中，用户访问该网站就执行了这段恶意代码。而且这种病毒一般杀毒软件都查杀不了，也可以看出 eval() 的不安全性。
+
+### **ES6: find 和 findIndex**
+
+indexOf(element) 是根据数组元素找到元素所在数组的位置
+
+find(callback) 是按照回调函数的规则找到数组中第一个符合规则的元素，没有的话返回 undefined，回调函数的参数有value，index，arr
+
+findIndex(callback) 是 find 和 indexOf 的合体，传入回调函数，返回符合条件的数组成员位置，没有则返回-1
+
+indexOf 还有一个不足的地方是无法识别数组中的 NaN 元素，而 findIndex 可以
+
+### **判断是否是 NaN**
+NaN 不能直接通过 === 去判断，所以可以用：
+```
+Object.is(NaN, x)
+```
