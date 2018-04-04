@@ -69,3 +69,7 @@ git fetch [remote]
 git pull --rebase
 git push
 ```
+
+**问题**： 使用 git checkout 切换分支的时候报错 "error: cannot stat 'file': Permission denied"
+
+**解决方法**：据说这个错误只是在 Windows 下发生，应该是有什么其它应用程序打开了这个文件。所以试着关闭编辑器、任务管理器、命令行或者 FTP 服务之类的，百试百灵，总能解决问题
