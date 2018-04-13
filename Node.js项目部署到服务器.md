@@ -117,7 +117,9 @@ sudo forever stop id
 <br />
 
 ### **其它补充**
+
 **Linux 下升级 Node.js**
+
 检查当前版本号
 ```
 node -v
@@ -146,6 +148,7 @@ sudo ln -sf /usr/local/n/versions/node/6.0.0/bin/node /usr/bin/node
 或者用前面说的方法，下载 Nodejs 最新的源代码，编译安装
 
 **npm 安装模块出错：Error: SSL Error: CERT_UNTRUSTED**
+
 在安装 Express 和 forever 模块的那一步报 SSL 错误，可以使用以下命令绕过 https：
 ```
 npm config set strict-ssl false
