@@ -114,7 +114,50 @@ sudo forever stop id
 
 至此，项目部署成功
 
-<br />
+### **使用 Github 管理服务器的项目**
+之前更新服务器上的项目的方法是，在 Windows 上开发，然后用 FTP 上传项目到服务器上，然后更新应用，这样做比较麻烦，不太好管理项目，每次更新要么就是把整个项目删掉然后替换一个新的项目，要么就是自己手动一个个替换那些修改过的文件。无论怎样，这种做法都是不好的，所以使用 Git 或 svn 这类版本控制工具无疑是较好的选择，以下以 Github 为例
+
+首先先安装个 git
+```
+sudo yum install git
+```
+
+默认都有 Github 账号，并且选择 ssh 的连接方式，所以要生成 ssh key:
+```
+ssh-keygen -t rsa -C "your_email@youremail.com"
+```
+没特殊情况的话一直回车就好
+
+成功生成 ssh 密钥对，默认路径是 /root/.ssh/，打开 /root/.ssh/id_rsa.pub，把里面的公钥复制一下，登录自己的 Github，Setting -> SSH and GPG keys -> new SSH key。把公钥粘贴上去，title 随便写，Add 一下就成功添加了
+
+回到服务器上，输入：
+```
+ssh -T git@github.com
+```
+
+如果显示
+```
+Hi XXX! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
+就说明成功建立连接，有些情况会出现以下错误：
+```
+no such identity: /root/.ssh/github_rsa: No such file or directory
+Permission denied (publickey).
+```
+
+这个错误是 SSH 配置文件不匹配导致的，打开 /root/.ssh/config，可以看到 "identityFile = ~/.ssh/github_rsa"，然鹅，你压根没这个文件，而是有 id_rsa，所以改为以下配置就好了：
+```
+identityFile = ~/.ssh/id_rsa
+```
+
+接下来就是走老规矩路线配置 username 和 email
+```
+github config --global user.name "your name"
+github config --global user.email "your email"
+```
+
+把项目上传到 github 上，然后在服务器克隆下来。以后的开发维护过程就是，在工作终端上修改代码，提交到 github，服务器更新代码，重启服务，OK
 
 ### **其它补充**
 
