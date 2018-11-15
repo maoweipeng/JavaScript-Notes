@@ -143,3 +143,20 @@ NaN 不能直接通过 === 去判断，所以可以用：
 ```
 Object.is(NaN, x)
 ```
+### **构造一个有序的任务队列**
+``` js
+// 任务
+const task = () => new Promise((resolve, reject) => {
+  if (success) {
+    resolve()
+  }
+
+  reject()
+})
+
+// 构造任务队列
+const tasks = [task(), task()]
+
+// 执行
+Promise.all(tasks)
+```
