@@ -60,6 +60,19 @@ git checkout .
 git fetch [remote]
 ```
 
+追加提交
+```
+git add [file]
+git commit --amend
+git push --force
+```
+
+删除最后一次提交(不保留痕迹)
+```
+git reset --hard HEAD^
+git push origin [branch] -f
+```
+
 ## .gitignore 忽略特殊文件
 有些不必要的，如编译后产生的文件不需要提交上仓库中，可以使用 .gitignore 来忽略这些文件的提交
 
