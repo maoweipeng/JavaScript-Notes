@@ -35,6 +35,11 @@ git merge [branch]
 git checkout [branch]
 ```
 
+切换分支，如果不存在则创建该分支
+```
+git checkout -b [branch]
+```
+
 显示有变更的文件
 ```
 git status
